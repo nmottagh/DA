@@ -8,6 +8,7 @@ var builder = require("botbuilder");
 var botbuilder_azure = require("botbuilder-azure");
 var path = require('path');
 var gui = require('gui');
+var windowpopup = require('window-popup').windowPopup;
 
 var useEmulator = (process.env.NODE_ENV == 'development');
 
@@ -28,7 +29,7 @@ bot.dialog('/', [
         } else {
             session.send("Hi " + session.userData.name + "!");
 
-
+			popup (500, 500, 'http://www.google.com');
             var window = new gui.Window ({
                 'title': 'node-gui',
                 'window-position': 1,
@@ -46,10 +47,9 @@ bot.dialog('/', [
         
         message.attachments([
             new builder.HeroCard(session)
-                .title("RSA Group")
-                //.subtitle("100% Soft and Luxurious Cotton")
+                .title("Reliable & Accountable Insurance")
                 .text("Start a new claim process")
-                .images([builder.CardImage.create(session, 'https://www.google.ca/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&cad=rja&uact=8&ved=0ahUKEwjRybqxg8PUAhVQx2MKHc1fDF0QjRwIBw&url=http%3A%2F%2Fpress.pwc.com%2FNews-releases%2FPwC-Introduces-New-Branding-Initiative%2Fs%2F0b56b3ab-4176-4d9f-b47f-d09e02bebe17&psig=AFQjCNGKSlmcLzKxbJbUWQtHVqzuArPHKA&ust=1497725223290055')])
+                .images([builder.CardImage.create(session, 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/PricewaterhouseCoopers_Logo.svg/1185px-PricewaterhouseCoopers_Logo.svg.png')])
                 .buttons([
                      builder.CardAction.imBack(session, "OK " + session.userData.name + " ,please click here to start a claim " + "https://www.rsagroup.ca/make-claim", "File a new claim")
                 ])
