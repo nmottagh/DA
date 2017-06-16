@@ -7,7 +7,6 @@ https://docs.botframework.com/en-us/node/builder/chat/dialogs/#waterfall
 var builder = require("botbuilder");
 var botbuilder_azure = require("botbuilder-azure");
 var path = require('path');
-var gui = require('gui');
 var windowpopup = require('window-popup').windowPopup;
 
 var useEmulator = (process.env.NODE_ENV == 'development');
