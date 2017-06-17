@@ -44,9 +44,15 @@ bot.dialog('/', [
                      builder.CardAction.openUrl(session, 'https://nmottagh.wixsite.com/reliableinsurance/claims', 'File a new claim')
                 ])
             ]);
-    
+		
         session.send(message);
-    }
+    },
+	function (session){
+		
+		session.send ('OK,' + session.userData.name + 'I have directed you to the website to submit your claim!');
+		session.endDialog();
+		
+	}
 ]);
 
 bot.dialog('/askName', [
