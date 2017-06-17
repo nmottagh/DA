@@ -29,7 +29,7 @@ bot.dialog('/', [
             next();
         }
     },
-    function (session, results) {
+    function (session, args, next) {
         
         var message = new builder.Message(session);
         
