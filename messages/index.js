@@ -7,7 +7,6 @@ https://docs.botframework.com/en-us/node/builder/chat/dialogs/#waterfall
 var builder = require("botbuilder");
 var botbuilder_azure = require("botbuilder-azure");
 var path = require('path');
-var windowpopup = require('window-popup').windowPopup;
 
 var useEmulator = (process.env.NODE_ENV == 'development');
 
@@ -26,9 +25,7 @@ bot.dialog('/', [
         if (!session.userData.name) {
             session.beginDialog('/askName');
         } else {
-            session.send("Hi " + session.userData.name + "!");
-
-			popup (500, 500, 'http://www.google.com');
+            session.send("Welcome back " + session.userData.name + "!");
             next();
         }
     },
@@ -44,19 +41,11 @@ bot.dialog('/', [
                 .text("Start a new claim process")
                 .images([builder.CardImage.create(session, 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/PricewaterhouseCoopers_Logo.svg/1185px-PricewaterhouseCoopers_Logo.svg.png')])
                 .buttons([
-                     builder.CardAction.imBack(session, "OK " + session.userData.name + " ,please click here to start a claim " + "https://www.rsagroup.ca/make-claim", "File a new claim")
+                     builder.CardAction.openUrl(session, 'https://nmottagh.wixsite.com/reliableinsurance/claims', 'File a new claim')
                 ])
             ]);
     
         session.send(message);
-    },
-    function (session, results) {
-        session.userData.todoaction = results.response.entity;
-       // session.send("OK " + session.userData.name + " ,please click here to start a claim " + "https://www.rsagroup.ca/make-claim");
-        //if (session.userData.todoaction == "File a new claim"){
-        //   session.send("OK " + session.userData.name + " Please click here to start a claim " + "https://www.rsagroup.ca/make-claim");
-        //}
-        session.endDialog();
     }
 ]);
 
@@ -80,7 +69,6 @@ if (useEmulator) {
     server.post('/api/messages', connector.listen());    
 } else {
 	var listener = connector.listen();
-	
     var withLogging = function(context, req) {
         console.log = context.log;
         listener(context, req);
