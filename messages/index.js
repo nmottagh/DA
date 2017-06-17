@@ -46,6 +46,7 @@ bot.dialog('/', [
             ]);
 		
         session.send(message);
+		next();
     },
 	function (session){
 		
