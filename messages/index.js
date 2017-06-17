@@ -39,26 +39,20 @@ bot.dialog('/', [
             new builder.HeroCard(session)
                 .title("Reliable & Accountable Insurance")
                 .text("Start a new claim process")
-                .images([builder.CardImage.create(session, 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/PricewaterhouseCoopers_Logo.svg/1185px-PricewaterhouseCoopers_Logo.svg.png')])
+                .images([builder.CardImage.create(session, 'https://dl.dropboxusercontent.com/s/cd3bad9kscle12h/PricewaterhouseCoopers_Logo.png?dl=0')])
                 .buttons([
-                     builder.CardAction.openUrl(session, 'https://nmottagh.wixsite.com/reliableinsurance/claims', 'File a new claim');
-					 next();
+                     builder.CardAction.openUrl(session, 'https://nmottagh.wixsite.com/reliableinsurance/claims', 'File a new claim')
                 ])
-            ]);
+            ]); 
 		
         session.send(message);
-    },
-	function (session){
-		
-		session.send ('OK,' + session.userData.name + 'I have directed you to the website to submit your claim!');
-		session.endDialog();
-		
-	}
+    }
+
 ]);
 
 bot.dialog('/askName', [
     function (session) {
-        builder.Prompts.text(session, 'Hi! What is your name?');
+        builder.Prompts.text(session, 'Hello! What is your name?');
     },
     function (session, results) {
         session.userData.name = results.response;
