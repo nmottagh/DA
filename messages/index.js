@@ -41,12 +41,12 @@ bot.dialog('/', [
                 .text("Start a new claim process")
                 .images([builder.CardImage.create(session, 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/PricewaterhouseCoopers_Logo.svg/1185px-PricewaterhouseCoopers_Logo.svg.png')])
                 .buttons([
-                     builder.CardAction.openUrl(session, 'https://nmottagh.wixsite.com/reliableinsurance/claims', 'File a new claim')
+                     builder.CardAction.openUrl(session, 'https://nmottagh.wixsite.com/reliableinsurance/claims', 'File a new claim');
+					 next();
                 ])
             ]);
 		
         session.send(message);
-		next();
     },
 	function (session){
 		
