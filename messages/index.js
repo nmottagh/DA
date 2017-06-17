@@ -39,7 +39,7 @@ bot.dialog('/', [
             new builder.HeroCard(session)
                 .title("Reliable & Accountable Insurance")
                 .text("Start a new claim process")
-                .images([builder.CardImage.create(session, 'https://dl.dropboxusercontent.com/s/cd3bad9kscle12h/PricewaterhouseCoopers_Logo.png?dl=0')])
+                .images([builder.CardImage.create(session, 'https://dl.dropboxusercontent.com/s/lji8s8g67x8jjpq/PricewaterhouseCoopers_Logo.png?dl=0')])
                 .buttons([
                      builder.CardAction.openUrl(session, 'https://nmottagh.wixsite.com/reliableinsurance/claims', 'File a new claim')
                 ])
