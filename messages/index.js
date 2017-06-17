@@ -29,12 +29,6 @@ bot.dialog('/', [
             session.send("Hi " + session.userData.name + "!");
 
 			popup (500, 500, 'http://www.google.com');
-            var window = new gui.Window ({
-                'title': 'node-gui',
-                'window-position': 1,
-                'opacity': 0.5
-            });
-            window.show ();
             next();
         }
     },
