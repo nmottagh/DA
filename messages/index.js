@@ -7,7 +7,6 @@ https://docs.botframework.com/en-us/node/builder/chat/dialogs/#waterfall
 var builder = require("botbuilder");
 var botbuilder_azure = require("botbuilder-azure");
 var path = require('path');
-var builder_cognitiveservices = require("botbuilder-cognitiveservices");
 var useEmulator = (process.env.NODE_ENV == 'development');
 
 var connector = useEmulator ? new builder.ChatConnector() : new botbuilder_azure.BotServiceConnector({
@@ -25,7 +24,6 @@ var luisAPIHostName = 'westus.api.cognitive.microsoft.com';
 const LuisModelUrl = 'https://' + luisAPIHostName + '/luis/v2.0/apps/' + luisAppId + '?subscription-key=' + luisAPIKey;
 
 var bot = new builder.UniversalBot(connector);
-//bot.localePath(path.join(__dirname, './locale'));
 
 //Dialog with Luis
 var recognizer = new builder.LuisRecognizer(LuisModelUrl);
