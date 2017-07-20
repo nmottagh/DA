@@ -7,7 +7,7 @@ https://docs.botframework.com/en-us/node/builder/chat/dialogs/#waterfall
 var builder = require("botbuilder");
 var botbuilder_azure = require("botbuilder-azure");
 var path = require('path');
-
+var builder_cognitiveservices = require("botbuilder-cognitiveservices");
 var useEmulator = (process.env.NODE_ENV == 'development');
 
 var connector = useEmulator ? new builder.ChatConnector() : new botbuilder_azure.BotServiceConnector({
@@ -17,10 +17,27 @@ var connector = useEmulator ? new builder.ChatConnector() : new botbuilder_azure
     openIdMetadata: process.env['BotOpenIdMetadata']
 });
 
+// Make sure you add code to validate these fields
+var luisAppId = process.env['LuisAppId'];
+var luisAPIKey = process.env.LuisAPIKey;
+var luisAPIHostName = process.env.LuisAPIHostName || 'westus.api.cognitive.microsoft.com';
+
+const LuisModelUrl = 'https://' + luisAPIHostName + '/luis/v1/application?id=' + luisAppId + '&subscription-key=' + luisAPIKey;
+
 var bot = new builder.UniversalBot(connector);
 bot.localePath(path.join(__dirname, './locale'));
 
-bot.dialog('/', [
+//Dialog with Luis
+var recognizer = new builder.LuisRecognizer(LuisModelUrl);
+var intents = new builder.IntentDialog({ recognizers: [recognizer] })
+// Sample LUIS intent
+.matches('request help', (session, args) => {
+    session.send('I'm here to help!');
+});
+
+bot.dialog('/', intents);  
+
+/*bot.dialog('/', [
     function (session, args, next) {
         if (!session.userData.name) {
             session.beginDialog('/askName');
@@ -48,7 +65,7 @@ bot.dialog('/', [
         session.send(message);
     }
 
-]);
+]);*/
 
 bot.dialog('/askName', [
     function (session) {
