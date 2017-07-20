@@ -19,7 +19,7 @@ var connector = useEmulator ? new builder.ChatConnector() : new botbuilder_azure
 
 // Make sure you add code to validate these fields
 var luisAppId = process.env['LuisAppId'];
-var luisAPIKey = process.env.LuisAPIKey;
+var luisAPIKey = process.env['LuisAPIKey'];
 var luisAPIHostName = process.env.LuisAPIHostName || 'westus.api.cognitive.microsoft.com';
 
 const LuisModelUrl = 'https://' + luisAPIHostName + '/luis/v1/application?id=' + luisAppId + '&subscription-key=' + luisAPIKey;
