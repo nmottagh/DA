@@ -20,12 +20,12 @@ var connector = useEmulator ? new builder.ChatConnector() : new botbuilder_azure
 // Make sure you add code to validate these fields
 var luisAppId = process.env['LuisAppId'];
 var luisAPIKey = process.env['LuisAPIKey'];
-var luisAPIHostName = process.env.LuisAPIHostName || 'westus.api.cognitive.microsoft.com';
+var luisAPIHostName = 'westus.api.cognitive.microsoft.com';
 
 const LuisModelUrl = 'https://' + luisAPIHostName + '/luis/v1/application?id=' + luisAppId + '&subscription-key=' + luisAPIKey;
 
 var bot = new builder.UniversalBot(connector);
-bot.localePath(path.join(__dirname, './locale'));
+//bot.localePath(path.join(__dirname, './locale'));
 
 //Dialog with Luis
 var recognizer = new builder.LuisRecognizer(LuisModelUrl);
@@ -67,7 +67,7 @@ bot.dialog('/', intents);
 
 ]);*/
 
-bot.dialog('/askName', [
+/*bot.dialog('/askName', [
     function (session) {
         builder.Prompts.text(session, 'Hello! What is your name?');
     },
@@ -75,7 +75,7 @@ bot.dialog('/askName', [
         session.userData.name = results.response;
         session.endDialog();
     }
-]);
+]);*/
 
 
 if (useEmulator) {
@@ -86,12 +86,11 @@ if (useEmulator) {
     });
     server.post('/api/messages', connector.listen());    
 } else {
-	var listener = connector.listen();
+	
+	/*var listener = connector.listen();
     var withLogging = function(context, req) {
         console.log = context.log;
         listener(context, req);
-    }
-
-    module.exports = { default: withLogging }
-    // module.exports = { default: connector.listen() }
+    }*/
+    module.exports = { default: connector.listen() }
 }
