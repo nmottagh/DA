@@ -32,7 +32,7 @@ var recognizer = new builder.LuisRecognizer(LuisModelUrl);
 var intents = new builder.IntentDialog({ recognizers: [recognizer] })
 // Sample LUIS intent
 .matches('request help', (session, args) => {
-    session.send('I'm here to help!');
+    session.send('Im here to help!');
 });
 
 bot.dialog('/', intents);  
