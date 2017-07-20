@@ -22,7 +22,7 @@ var luisAppId = process.env['LuisAppId'];
 var luisAPIKey = process.env['LuisAPIKey'];
 var luisAPIHostName = 'westus.api.cognitive.microsoft.com';
 
-const LuisModelUrl = 'https://' + luisAPIHostName + '/luis/v1/application?id=' + luisAppId + '&subscription-key=' + luisAPIKey;
+const LuisModelUrl = 'https://' + luisAPIHostName + '/luis/v2.0/apps/' + luisAppId + '?subscription-key=' + luisAPIKey;
 
 var bot = new builder.UniversalBot(connector);
 //bot.localePath(path.join(__dirname, './locale'));
