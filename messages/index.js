@@ -40,7 +40,7 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] })
 )
 .matches('request help', function (session) {
 	
-	session.send('OK. I understand you need help. An agent will call you at your phone number: ' + session.userData.phonenumber);
+	session.send("OK. I understand you need help. An agent will call you at your phone number:" + session.userData.phonenumber);
 })
 .matches('get coverage', function (session) {
 	session.send('Here is your coverage info. TODO');
@@ -48,7 +48,7 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] })
 })
 .matches('report accident', [
 	function (session) {
-		session.Prompts.text(session, 'OK, I understand you have been in an accident.');
+		session.Prompts.text(session, "OK, I understand you have been in an accident.");
 		session.beginDialog('/file a claim');
 	}
 ])
@@ -60,7 +60,7 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] })
 	session.reset();
 })
 .onDefault(function (session) {
-	session.send('Sorry, I am not sure what meant. We need to start over.');
+	session.send("Sorry, I am not sure what meant. We need to start over.");
 	session.reset();
 });
 
@@ -89,13 +89,13 @@ bot.dialog('/file a claim', [
 
 bot.dialog('/askName', [
     function (session) {
-        builder.Prompts.text(session, 'Hello! What is your name?');
+        builder.Prompts.text(session, "Hello! What is your name?");
     },
     function (session, results) {
         session.userData.name = results.response;
 	},
 	function (session){
-		session.Prompts.text(session, 'What is your phone number, ' + session.userData.name + '?');
+		session.Prompts.text(session, "What is your phone number, " + session.userData.name + "?");
     }, 
 	function (session, results) {
 		session.userData.phonenumber = results.response;
@@ -104,8 +104,10 @@ bot.dialog('/askName', [
 ]);
 
 bot.dialog('/file a claim'), [
-	session.send('Here, file a claim');
-	session.endDialog();
+	function (session) {
+		session.send("File a claim placeholder");
+		session.endDialog();
+	}
 ];
 
 if (useEmulator) {
