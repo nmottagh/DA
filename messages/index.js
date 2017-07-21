@@ -29,11 +29,11 @@ var bot = new builder.UniversalBot(connector);
 var recognizer = new builder.LuisRecognizer(LuisModelUrl);
 var intents = new builder.IntentDialog({ recognizers: [recognizer] })
 // Sample LUIS intent
-.matches('request help', (session, args) => {
-    session.send('Im here to help!');
+.matches('gretting', (session, args) => {
+    session.beginDialog('/');
 });
 
-//bot.dialog('/', intents);  
+bot.dialog('/', intents);  
 
 bot.dialog('/', [
     function (session, args, next) {
