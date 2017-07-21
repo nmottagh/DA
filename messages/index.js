@@ -91,8 +91,9 @@ bot.dialog('/askName', [
     function (session) {
         builder.Prompts.text(session, "Hello! What is your name?");
     },
-    function (session, results) {
+    function (session, results, next) {
         session.userData.name = results.response;
+		next();
 	},
 	function (session){
 		session.Prompts.text(session, "What is your phone number, " + session.userData.name + "?");
