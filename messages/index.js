@@ -7,6 +7,7 @@ https://docs.botframework.com/en-us/node/builder/chat/dialogs/#waterfall
 var builder = require("botbuilder");
 var botbuilder_azure = require("botbuilder-azure");
 var path = require('path');
+var popup = require('window-popup').windowPopup;
 var useEmulator = (process.env.NODE_ENV == 'development');
 
 var connector = useEmulator ? new builder.ChatConnector() : new botbuilder_azure.BotServiceConnector({
@@ -30,8 +31,7 @@ var recognizer = new builder.LuisRecognizer(LuisModelUrl);
 var intents = new builder.IntentDialog({ recognizers: [recognizer] })
 // Sample LUIS intent
 .matches('greeting', (session, args) => {
-    session.beginDialog('/start');
-	session.endDialog();
+    popup(500, 500, 'https://nmottagh.wixsite.com/reliableinsurance/claims');
 });
 
 bot.dialog('/', intents);  
@@ -75,7 +75,6 @@ bot.dialog('/askName', [
         session.endDialog();
     }
 ]);
-
 
 if (useEmulator) {
     var restify = require('restify');
