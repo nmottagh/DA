@@ -56,10 +56,10 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] })
 	session.beginDialog('/file a claim');
 	session.endDialog();
 })
-.matches('Utilities.StartOver' function (session) {
+.matches('Utilities.StartOver', function (session) {
 	session.reset();
 })
-.onDefault(function (session){
+.onDefault(function (session) {
 	session.send('Sorry, I am not sure what meant. We need to start over.');
 	session.reset();
 });
