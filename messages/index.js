@@ -35,6 +35,7 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] })
             session.beginDialog('/askName');
         } else {
             session.send("Welcome back " + session.userData.name + "!");
+			session.endDialog();
         }
     }
 )
