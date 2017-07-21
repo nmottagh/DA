@@ -29,7 +29,7 @@ var bot = new builder.UniversalBot(connector);
 var recognizer = new builder.LuisRecognizer(LuisModelUrl);
 var intents = new builder.IntentDialog({ recognizers: [recognizer] })
 // Sample LUIS intent
-.matches('gretting', (session, args) => {
+.matches('greeting', (session, args) => {
     session.beginDialog('/start');
 	session.endDialog();
 });
