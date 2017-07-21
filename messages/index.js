@@ -33,9 +33,9 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] })
     session.send('Im here to help!');
 });
 
-bot.dialog('/', intents);  
+//bot.dialog('/', intents);  
 
-/*bot.dialog('/', [
+bot.dialog('/', [
     function (session, args, next) {
         if (!session.userData.name) {
             session.beginDialog('/askName');
@@ -63,7 +63,7 @@ bot.dialog('/', intents);
         session.send(message);
     }
 
-]);*/
+]);
 
 /*bot.dialog('/askName', [
     function (session) {
