@@ -30,23 +30,44 @@ var bot = new builder.UniversalBot(connector);
 var recognizer = new builder.LuisRecognizer(LuisModelUrl);
 var intents = new builder.IntentDialog({ recognizers: [recognizer] })
 // Sample LUIS intent
-.matches('greeting', [ function (session, args){
-		session.send('OK');
-		popup(500, 500, 'https://nmottagh.wixsite.com/reliableinsurance/claims');
-	}
-]);
-
-bot.dialog('/', intents);  
-
-bot.dialog('/start', [
-    function (session, args, next) {
+.matches('greeting', [     function (session, args, next) {
         if (!session.userData.name) {
             session.beginDialog('/askName');
         } else {
             session.send("Welcome back " + session.userData.name + "!");
             next();
         }
-    },
+    }
+])
+.matches('request help', function (session) {
+	
+	session.send('OK. I understand you need help. An agent will call you at your phone number: ' + session.userData.phonenumber);
+})
+.matches('get coverage', function (session) {
+	session.send('Here is your coverage info. TODO');
+	session.endDialog();
+})
+.matches('report accident', [
+	function (session) {
+		session.Prompts.text(session, 'OK, I understand you have been in an accident.');
+		session.beginDialog('/file a claim');
+	}
+])
+.matches('file a claim', function (session) {
+	session.beginDialog('/file a claim');
+	session.endDialog();
+})
+.matches('Utilities.StartOver' function (session) {
+	session.reset();
+})
+.onDefault(function (session){
+	session.send('Sorry, I am not sure what meant. We need to start over.');
+	session.reset();
+});
+
+bot.dialog('/', intents);  
+
+bot.dialog('/file a claim', [
     function (session, args, next) {
         
         var message = new builder.Message(session);
@@ -74,9 +95,20 @@ bot.dialog('/askName', [
     },
     function (session, results) {
         session.userData.name = results.response;
-        session.endDialog();
-    }
+	},
+	function (session){
+		session.Prompts.text(session, 'What is your phone number, ' + session.userData.name + '?');
+    }, 
+	function (session, results) {
+		session.userData.phonenumber = results.response;
+		session.endDialog();
+	}
 ]);
+
+bot.dialog('/file a claim'), [
+	session.send('Here, file a claim');
+	session.endDialog();
+];
 
 if (useEmulator) {
     var restify = require('restify');
