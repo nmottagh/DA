@@ -30,15 +30,14 @@ var bot = new builder.UniversalBot(connector);
 var recognizer = new builder.LuisRecognizer(LuisModelUrl);
 var intents = new builder.IntentDialog({ recognizers: [recognizer] })
 // Sample LUIS intent
-.matches('greeting', [     function (session, args, next) {
+.matches('greeting', function (session, args, next) {
         if (!session.userData.name) {
             session.beginDialog('/askName');
         } else {
             session.send("Welcome back " + session.userData.name + "!");
-            next();
         }
     }
-])
+)
 .matches('request help', function (session) {
 	
 	session.send('OK. I understand you need help. An agent will call you at your phone number: ' + session.userData.phonenumber);
@@ -68,7 +67,7 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] })
 bot.dialog('/', intents);  
 
 bot.dialog('/file a claim', [
-    function (session, args, next) {
+    function (session, args) {
         
         var message = new builder.Message(session);
         
@@ -86,7 +85,6 @@ bot.dialog('/file a claim', [
 		
         session.send(message);
     }
-
 ]);
 
 bot.dialog('/askName', [
