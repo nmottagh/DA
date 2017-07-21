@@ -65,7 +65,7 @@ bot.dialog('/', [
 
 ]);
 
-/*bot.dialog('/askName', [
+bot.dialog('/askName', [
     function (session) {
         builder.Prompts.text(session, 'Hello! What is your name?');
     },
@@ -73,7 +73,7 @@ bot.dialog('/', [
         session.userData.name = results.response;
         session.endDialog();
     }
-]);*/
+]);
 
 
 if (useEmulator) {
