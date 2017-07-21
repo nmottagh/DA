@@ -30,12 +30,13 @@ var recognizer = new builder.LuisRecognizer(LuisModelUrl);
 var intents = new builder.IntentDialog({ recognizers: [recognizer] })
 // Sample LUIS intent
 .matches('gretting', (session, args) => {
-    session.beginDialog('/');
+    session.beginDialog('/start');
+	session.endDialog();
 });
 
 bot.dialog('/', intents);  
 
-bot.dialog('/', [
+bot.dialog('/start', [
     function (session, args, next) {
         if (!session.userData.name) {
             session.beginDialog('/askName');
