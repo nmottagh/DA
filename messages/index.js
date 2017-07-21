@@ -30,9 +30,11 @@ var bot = new builder.UniversalBot(connector);
 var recognizer = new builder.LuisRecognizer(LuisModelUrl);
 var intents = new builder.IntentDialog({ recognizers: [recognizer] })
 // Sample LUIS intent
-.matches('greeting', (session, args) => {
-    popup(500, 500, 'https://nmottagh.wixsite.com/reliableinsurance/claims');
-});
+.matches('greeting', [ function (session, args){
+		session.send('OK');
+		popup(500, 500, 'https://nmottagh.wixsite.com/reliableinsurance/claims');
+	}
+]);
 
 bot.dialog('/', intents);  
 
