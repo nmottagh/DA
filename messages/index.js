@@ -41,7 +41,14 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] })
 )
 .matches('request help', function (session) {
 	
-	session.send("OK. I understand you need help. An agent will call you at your phone number:" + session.userData.phonenumber);
+	if (!session.userData.phonenumber) {
+		session.send("OK. I understand you need help. An agent will call you at your phone number: " + session.userData.phonenumber); 
+	} else {
+		session.Prompts.text('OK. I understand you need help. We\'d like to call you to help; however, we do not have your phone number on file. Please call us at 1-800-rlb-insrc'); 
+	}
+	
+	session.endDialog();
+	
 })
 .matches('get coverage', function (session) {
 	session.send('Here is your coverage info. TODO');
