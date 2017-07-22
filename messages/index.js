@@ -35,7 +35,7 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] })
             session.beginDialog('/askName');
         } else {
             session.send("Welcome back " + session.userData.name + "!");
-			session.endDialog();
+			session.reset();
         }
     }
 )
@@ -45,7 +45,7 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] })
 })
 .matches('get coverage', function (session) {
 	session.send('Here is your coverage info. TODO');
-	session.endDialog();
+	session.reset();
 })
 .matches('report accident', [
 	function (session) {
@@ -55,7 +55,6 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] })
 ])
 .matches('file a claim', function (session) {
 	session.beginDialog('/file a claim');
-	session.endDialog();
 })
 .matches('Utilities.StartOver', function (session) {
 	session.reset();
@@ -85,6 +84,7 @@ bot.dialog('/file a claim', [
             ]); 
 		
         session.send(message);
+		session.endDialog();
     }
 ]);
 
