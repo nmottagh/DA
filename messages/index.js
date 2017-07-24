@@ -41,24 +41,26 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] })
 	if (!session.userData.phonenumber) {
 		session.send("OK. I understand you need help. An agent will call you at your phone number: " + session.userData.phonenumber); 
 	} else {
-		session.send("OK. I understand you need help. We\'d like to call you to help; however, we do not have your phone number on file. Please call us at 1-800-rlb-insrc"); 
+		session.send("OK. I understand you need help. We would like to call you to help; however, we do not have your phone number on file. Please call us at 1-800-rlb-insrc"); 
 	}
 })
 .matches('get coverage', (session) => {
 	session.send("Here is your coverage info. TODO: add the summary.");
 })
-.matches('report accident', [
-	function (session) {
+.matches('report accident', (session) => {
 		session.send("OK, I understand you have been in an accident.");
 		session.beginDialog('/file a claim');
-	}
-])
-.matches('file a claim', function (session) {
+})
+.matches('file a claim', (session) => {
 	session.beginDialog('/file a claim');
 })
-.matches('Utilities.StartOver', function (session) {
+.matches('Utilities.StartOver', (session) => {
 	//session.reset();
+})
+.onDefault((session) => {
+    session.send('I am not sure what you said.');
 });
+
 
 bot.dialog('/', intents);  
 
@@ -88,15 +90,13 @@ bot.dialog('/askName', [
     function (session) {
         builder.Prompts.text(session, "Hello! What is your name?");
     },
-    function (session, results, next) {
+    function (session, results) {
         session.userData.name = results.response;
-		next();
-	},
-	function (session){
 		session.Prompts.text(session, "What is your phone number, " + session.userData.name + "?");
-    }, 
+	},
 	function (session, results) {
 		session.userData.phonenumber = results.response;
+		session.endDialog("Welcome" + session.userData.name);
 	}
 ]);
 
