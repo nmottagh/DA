@@ -30,33 +30,26 @@ var bot = new builder.UniversalBot(connector);
 var recognizer = new builder.LuisRecognizer(LuisModelUrl);
 var intents = new builder.IntentDialog({ recognizers: [recognizer] })
 // Sample LUIS intent
-.matches('greeting', function (session, args, next) {
+.matches('greeting', (session) => {
         if (!session.userData.name) {
             session.beginDialog('/askName');
         } else {
             session.send("Welcome back " + session.userData.name + "!");
-			//session.reset();
         }
-    }
-)
-.matches('request help', function (session) {
-	
+})
+.matches('request help', (session) => {
 	if (!session.userData.phonenumber) {
 		session.send("OK. I understand you need help. An agent will call you at your phone number: " + session.userData.phonenumber); 
 	} else {
-		session.Prompts.text('OK. I understand you need help. We\'d like to call you to help; however, we do not have your phone number on file. Please call us at 1-800-rlb-insrc'); 
+		session.send("OK. I understand you need help. We\'d like to call you to help; however, we do not have your phone number on file. Please call us at 1-800-rlb-insrc"); 
 	}
-	
-	session.endDialog();
-	
 })
-.matches('get coverage', function (session) {
-	session.send('Here is your coverage info. TODO');
-	//session.reset();
+.matches('get coverage', (session) => {
+	session.send("Here is your coverage info. TODO: add the summary.");
 })
 .matches('report accident', [
 	function (session) {
-		session.Prompts.text(session, "OK, I understand you have been in an accident.");
+		session.send("OK, I understand you have been in an accident.");
 		session.beginDialog('/file a claim');
 	}
 ])
@@ -64,7 +57,7 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] })
 	session.beginDialog('/file a claim');
 })
 .matches('Utilities.StartOver', function (session) {
-	session.reset();
+	//session.reset();
 });
 
 bot.dialog('/', intents);  
@@ -104,7 +97,6 @@ bot.dialog('/askName', [
     }, 
 	function (session, results) {
 		session.userData.phonenumber = results.response;
-		session.endDialog();
 	}
 ]);
 
