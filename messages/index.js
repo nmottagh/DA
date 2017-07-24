@@ -35,7 +35,7 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] })
             session.beginDialog('/askName');
         } else {
             session.send("Welcome back " + session.userData.name + "!");
-			session.reset();
+			//session.reset();
         }
     }
 )
@@ -65,10 +65,6 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] })
 })
 .matches('Utilities.StartOver', function (session) {
 	session.reset();
-})
-.onDefault(function (session) {
-	session.send("Sorry, I am not sure what meant. We need to start over.");
-	//session.reset();
 });
 
 bot.dialog('/', intents);  
