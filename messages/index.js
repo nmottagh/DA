@@ -52,7 +52,7 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] })
 })
 .matches('get coverage', function (session) {
 	session.send('Here is your coverage info. TODO');
-	session.reset();
+	//session.reset();
 })
 .matches('report accident', [
 	function (session) {
@@ -68,7 +68,7 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] })
 })
 .onDefault(function (session) {
 	session.send("Sorry, I am not sure what meant. We need to start over.");
-	session.reset();
+	//session.reset();
 });
 
 bot.dialog('/', intents);  
