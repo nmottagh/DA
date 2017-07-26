@@ -4,10 +4,6 @@ For a complete walkthrough of creating this type of bot see the article at
 https://docs.botframework.com/en-us/node/builder/chat/dialogs/#waterfall
 -----------------------------------------------------------------------------*/
 
-// TODO: Clean up the hero card
-// TODO: Update the help handler to include the wix 
-// TODO: Take the picture as an attachement and put in the hero card
-
 var deployment = "production";
 
 "use strict";
@@ -66,8 +62,11 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] })
         if (!session.userData.name) {
             session.beginDialog('/askName');
         } else {
-            session.send("Welcome back " + session.userData.name + "!");
+            session.beginDialog('/menu');
         }
+})
+.matches('show menu' , (session) => {
+	session.beginDialog('/menu');
 })
 .matches('request help', (session) => {
 	if (session.userData.phonenumber) {
@@ -77,8 +76,7 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] })
 	}
 })
 .matches('get coverage', (session) => {
-	var msg = new builder.Message(session);
-  var msg = new builder.Message(session)
+	var msg = new builder.Message(session)
     .addAttachment({
         contentType: "application/vnd.microsoft.card.adaptive",
         content: {
@@ -107,7 +105,7 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] })
 										},
 										{
 											"type": "TextBlock",
-											"text": "Auto Insurance",
+											"text": "Auto",
 											"weight": "bolder",
 											"size": "medium"
 										},
@@ -185,6 +183,7 @@ var date;
 var location;
 var thirdparty;
 var policereportno;
+var photo;
 
 bot.dialog('/file a claim', [
     
@@ -214,49 +213,161 @@ bot.dialog('/file a claim', [
 		next();
 	},
 	function (session) {
+		builder.Prompts.confirm(session, "Do you have a picture?");
+	},
+	function (session, results, next) {
+		if (results.response) {
+			builder.Prompts.attachment(session, "Please attach a picture.");
+		}
+		next();
+	},
+	function (session, results, next) {
+		if (results.response) {
+			photo = results.response[0];
+		}
+		next();
+	},
+	function (session) {
 		builder.Prompts.confirm(session, "Has a police report been filed?");
 	}, 
 	function (session, results, next) {
 		if (results.response) {
 			builder.Prompts.text(session, "Please enter your police report number.");
-			next();
 		} else {
 			session.send("We will file your claim intake without a police report for now. Please ensure you update your claim with the police number once available.")
-			next();
 		}
+		next();
 	}, 
 	function (session, results, next) {
 		if (!results.response) {
-			next();
+			policereportno = "Not Provided";
 		} else {
 			policereportno = results.response;
-			next();
 		}
-	},
-	function (session) {
-		builder.Prompts.attachment(session, "Please attach a picture.");
+		next();
 	},
 	function (session, results, args) {
-        
-		var firstAttachment = results.response[0];
-          
-		var message = new builder.Message(session);
-        
-        message.attachmentLayout(builder.AttachmentLayout.carousel);
-        
-        message.attachments([
-            new builder.HeroCard(session)
-                .title("Claim Information")
-				.subtitle("Please verify the information and press submit to start your claim.")
-                .text(date + location + thirdparty + policereportno)
-                .images([builder.CardImage.create(session, 'https://dl.dropboxusercontent.com/s/lji8s8g67x8jjpq/PricewaterhouseCoopers_Logo.png?dl=0')])
-                .buttons([
-					 builder.CardAction.openUrl(session, 'https://docs.google.com/forms/d/e/1FAIpQLSdhc96iE-8_pbAKg5ejIsSBUlPkpTeEjkExUsG6wnx-gRSJRg/viewform?usp=pp_url&entry.2005620554=' + date +'&entry.1045781291=' + location + '&entry.1065046570=' + thirdparty + '&entry.1166974658=' + policereportno + '&entry.839337160', 'File a new claim')
-                ])
-            ]); 
-		
-		message.addAttachment(firstAttachment);
-		 
+                  
+		var message = new builder.Message(session)
+		.addAttachment({
+        contentType: "application/vnd.microsoft.card.adaptive",
+        content: {
+            type: "AdaptiveCard",
+               body: [
+				{
+					"type": "ColumnSet",
+					"columns": [
+						{
+							"type": "Column",
+							"size": "auto",
+							"items": [
+								{
+									"type": "Image",
+									"size": "medium",
+									"url": "https://dl.dropboxusercontent.com/s/lji8s8g67x8jjpq/PricewaterhouseCoopers_Logo.png?dl=0"
+								},
+								{
+									"type": "TextBlock",
+									"text": "Reliable Insurance Inc.",
+									"size": "small",
+									"isSubtle": true   
+								}
+							]
+						},
+						{
+							"type": "Column",
+							"size": "stretch",
+							"items": [
+								{
+									"type": "TextBlock",
+									"text": "Your Claim Summary",
+									"horizontalAlignment": "right",
+									"isSubtle": true
+								},
+								{
+									"type": "TextBlock",
+									"text": "NEW",
+									"horizontalAlignment": "right",
+									"size": "large",
+									"color": "attention"
+								}
+							]
+						}
+					]
+				},
+				{
+					"type": "ColumnSet",
+					"separation": "strong",
+					"columns": [
+						{
+							"type": "Column",
+							"size": "stretch",
+							"items": [
+								{
+									"type": "TextBlock",
+									"text": "Date",
+									"isSubtle": true
+								},
+								{
+									"type": "TextBlock",
+									"text": "Location"
+								},
+								{
+									"type": "TextBlock",
+									"text": "Involves Third Party"
+								},
+								{
+									"type": "TextBlock",
+									"text": "Police Report"
+								}
+							]
+						},
+						{
+							"type": "Column",
+							"size": "auto",
+							"items": [
+								{
+									"type": "TextBlock",
+									"text": date,
+									"horizontalAlignment": "right",
+									"isSubtle": true
+								},
+								{
+									"type": "TextBlock",
+									"text": location,
+									"horizontalAlignment": "right"
+								},
+								{
+									"type": "TextBlock",
+									"text": thirdparty,
+									"horizontalAlignment": "right"
+								},
+								{
+									"type": "TextBlock",
+									"text": policereportno,
+									"horizontalAlignment": "right"
+								}
+							]
+						}
+					]
+				},
+				{
+					"type":"Image",
+					"url": photo.contentUrl,
+					"size": "auto",
+					"horizontalAlignment" : "center"
+				}
+				], 
+				"actions": [
+					{
+						"type": "Action.OpenUrl",
+						"title": "File Your Claim",
+						"url": "https://docs.google.com/forms/d/e/1FAIpQLSdhc96iE-8_pbAKg5ejIsSBUlPkpTeEjkExUsG6wnx-gRSJRg/viewform?usp=pp_url&entry.2005620554=" + date + "&entry.1045781291=" + location + "&entry.1065046570=" + thirdparty + "&entry.1166974658=" + policereportno + "&entry.839337160"
+					}
+				]
+			}
+		});
+       	 
         session.send(message);
 		session.endDialog();
     }
@@ -264,18 +375,25 @@ bot.dialog('/file a claim', [
 
 bot.dialog('/askName', [
     function (session) {
-        builder.Prompts.text(session, "Hello! What is your name?");
+        builder.Prompts.text(session, "Hello! Since this is the first time we are chatting, I need to know your name. What is your name?");
     },
 	function (session, results, next) {
         session.userData.name = results.response;
 		next();
 	},
 	function (session) {
-		builder.Prompts.text(session, "Hello " + session.userData.name + "! What is your phone number?");
+		builder.Prompts.text(session, session.userData.name + ", what is your phone number?");
 	},
 	function (session, results) {
 		session.userData.phonenumber = results.response;
-		session.endDialog("Welcome " + session.userData.name);
+		session.beginDialog('/menu');
+	}
+]);
+
+bot.dialog('/menu', [
+	function (session) {
+		builder.Prompts.choice(session, "What can I help you with today?", "Check Coverage | File a Claim | Get Contact Info", {listStyle:3});
+		session.endDialog();
 	}
 ]);
 
