@@ -229,27 +229,15 @@ bot.dialog('/file a claim', [
 		}
 	},
 	function (session) {
-		session.send("Please take a picture and attach.");
+		builder.prompts.attachement(session, "Please attach a picture.");
 	},
 	function (session) {
-		var msg = session.message;
-		if (msg.attachments && msg.attachments.length > 0) {
-		 // Echo back attachment
-		 var attachment = msg.attachments[0];
-			session.send({
-				text: "You sent:",
-				attachments: [
-					{
-						contentType: attachment.contentType,
-						contentUrl: attachment.contentUrl,
-						name: attachment.name
-					}
-				]
-			});
-		} else {
-			// Echo back users text
-			session.send("You said: %s", session.message.text);
-		}
+		var firstAttachment = results.response[0],
+            msg = new builder.Message(session)
+                .text("You sent a file of type %s and named %s",
+                      firstAttachment.contentType, firstAttachment.name);
+        msg.addAttachment(attachment);
+        session.endDialog(msg);
 	},
 	function (session, args) {
         var message = new builder.Message(session);
