@@ -33,6 +33,11 @@ if (deployment == "production") {
 } else {
 	var restify = require('restify');
 	
+	// Make sure you add code to validate these fields
+	var luisAppId = '';
+	var luisAPIKey = '';
+	var luisAPIHostName = 'westus.api.cognitive.microsoft.com';
+	
 	// Setup Restify Server
 	var server = restify.createServer();
 	server.listen(process.env.port || process.env.PORT || 3978, function () {
@@ -231,16 +236,11 @@ bot.dialog('/file a claim', [
 	function (session) {
 		builder.Prompts.attachment(session, "Please attach a picture.");
 	},
-	function (session, results) {
-		var firstAttachment = results.response[0],
-            msg = new builder.Message(session)
-                .text("You sent a file of type %s and named %s",
-                      firstAttachment.contentType, firstAttachment.name);
-        msg.addAttachment(attachment);
-        session.endDialog(msg);
-	},
-	function (session, args) {
-        var message = new builder.Message(session);
+	function (session, results, args) {
+        
+		var firstAttachment = results.response[0];
+          
+		var message = new builder.Message(session);
         
         message.attachmentLayout(builder.AttachmentLayout.carousel);
         
@@ -255,6 +255,8 @@ bot.dialog('/file a claim', [
                 ])
             ]); 
 		
+		message.addAttachment(firstAttachment);
+		 
         session.send(message);
 		session.endDialog();
     }
