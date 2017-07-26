@@ -229,7 +229,7 @@ bot.dialog('/file a claim', [
 		}
 	},
 	function (session) {
-		builder.prompts.attachement(session, "Please attach a picture.");
+		builder.Prompts.attachment(session, "Please attach a picture.");
 	},
 	function (session, results) {
 		var firstAttachment = results.response[0],
