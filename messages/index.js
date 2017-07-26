@@ -18,6 +18,11 @@ var useEmulator = (process.env.NODE_ENV == 'development');
 if (deployment == "production") {
 	var botbuilder_azure = require("botbuilder-azure");
 	
+	// Make sure you add code to validate these fields
+	var luisAppId = process.env['LuisAppId'];
+	var luisAPIKey = process.env['LuisAPIKey'];
+	var luisAPIHostName = 'westus.api.cognitive.microsoft.com';
+
 	var connector = useEmulator ? new builder.ChatConnector() : new botbuilder_azure.BotServiceConnector({
 		appId: process.env['MicrosoftAppId'],
 		appPassword: process.env['MicrosoftAppPassword'],
