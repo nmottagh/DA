@@ -231,7 +231,7 @@ bot.dialog('/file a claim', [
 	function (session) {
 		builder.prompts.attachement(session, "Please attach a picture.");
 	},
-	function (session) {
+	function (session, results) {
 		var firstAttachment = results.response[0],
             msg = new builder.Message(session)
                 .text("You sent a file of type %s and named %s",
