@@ -392,7 +392,7 @@ bot.dialog('/askName', [
 
 bot.dialog('/menu', [
 	function (session) {
-		builder.Prompts.choice(session, "What can I help you with today?", "Check Coverage | File a Claim | Get Contact Info", {listStyle:3});
+		builder.Prompts.choice(session, "What can I help you with today :)?", "Check Coverage | File a Claim | Get Contact Info", {listStyle:3});
 		session.endDialog();
 	}
 ]);
