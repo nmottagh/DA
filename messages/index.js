@@ -4,7 +4,11 @@ For a complete walkthrough of creating this type of bot see the article at
 https://docs.botframework.com/en-us/node/builder/chat/dialogs/#waterfall
 -----------------------------------------------------------------------------*/
 
-var deployment = "production";
+// TODO: Clean up the hero card
+// TODO: Update the help handler to include the wix 
+// TODO: Take the picture as an attachment and put in the hero card
+
+var deployment = "non-production";
 
 "use strict";
 var builder = require("botbuilder");
@@ -56,6 +60,12 @@ var bot = new builder.UniversalBot(connector);
 
 //Dialog with Luis
 var recognizer = new builder.LuisRecognizer(LuisModelUrl);
+
+
+bot.recognizer(recognizer);
+bot.set('persistUserData', false);
+bot.set('persistConversationData', false);
+
 var intents = new builder.IntentDialog({ recognizers: [recognizer] })
 // Sample LUIS intent
 .matches('greeting', (session) => {
@@ -165,13 +175,13 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] })
 .matches('file a claim', (session) => {
 	session.beginDialog('/file a claim');
 })
-.matches('Utilities.StartOver', (session) => {
-	//session.reset();
-})
 .matches('Forget me', (session) => {
 	session.userData.name = '';
 	session.userData.phonenumber = '';
 	session.send("I have erased your information.");
+})
+.matches('startover', (session) => {
+	session.beginDialog('/menu');
 })
 .onDefault((session) => {
     session.send('I am not sure what you said.');
@@ -179,11 +189,15 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] })
 
 bot.dialog('/', intents);  
 
+// TODO: RESET SESSION VARIABLES
+// TODO: FORCE TO NOT PERSIST SESSION DATA
+
 var date;
 var location;
 var thirdparty;
 var policereportno;
 var photo;
+var photourl = '';
 
 bot.dialog('/file a claim', [
     
@@ -224,6 +238,7 @@ bot.dialog('/file a claim', [
 	function (session, results, next) {
 		if (results.response) {
 			photo = results.response[0];
+			photourl = photo.contentUrl;
 		}
 		next();
 	},
@@ -353,7 +368,7 @@ bot.dialog('/file a claim', [
 				},
 				{
 					"type":"Image",
-					"url": photo.contentUrl,
+					"url": photourl,
 					"size": "auto",
 					"horizontalAlignment" : "center"
 				}
@@ -396,6 +411,21 @@ bot.dialog('/menu', [
 		session.endDialog();
 	}
 ]);
+
+bot.dialog('startover', [
+	function (session) {
+		session.send('OK! I can restart the conversation!');
+		session.clearDialogStack();
+		session.beginDialog('/menu');
+	}
+]).triggerAction({
+    matches: 'startover',
+    onSelectAction: (session, args, next) => {
+        // Add the help dialog to the top of the dialog stack 
+        // (override the default behavior of replacing the stack)
+        session.beginDialog(args.action, args);
+    }
+});
 
 if (useEmulator) {
     var restify = require('restify');
