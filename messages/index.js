@@ -86,83 +86,72 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] })
 	var msg = new builder.Message(session)
     .addAttachment({
         "contentType": "application/vnd.microsoft.card.adaptive",
-        "content": {
-            "type": "AdaptiveCard",
-            "body": [
-				{
-					"type": "Container",
-					"items": [
-						{
-							"type": "TextBlock",
-							"text": "Your Coverage Summary",
-							"weight": "bolder",
-							"size": "large"
-						},
-						{
-							"type": "ColumnSet",
-							"columns": [
-								{
-									"type": "Column",
-									"size": "auto",
-									"items": [
-										{
-											"type": "Image",
-											"url": "https://www.thepersonal.com/documents/11361124/11369861/icn_hub-carte-protections-auto-base.svg/ebd409a4-a7ab-4bd0-85a9-ef8f8f6f1560",
-											"size": "small",
-											"style": "person"
-										},
-										{
-											"type": "TextBlock",
-											"text": "Auto",
-											"weight": "bolder",
-											"size": "medium"
-										},
-										{
-											"type": "TextBlock",
-											"text": "Third Party Liability up to $1,000,000.00", 
-											"wrap": "true"
-										},
-										{
-											 "type": "TextBlock",
-											 "text": "Collision up to $200,000,000.00",
-											 "wrap": "true"
-										},
-										{
-											"type": "TextBlock",
-											"text": "Accident Benefits up to $1,000.00",
-											"wrap": "true"
-										}
-									]
-								},
-									{
-									"type": "Column",
-									"size": "auto",
-									"items": [
-										{
-											"type": "Image",
-											"url": "https://www.thepersonal.com/documents/11361124/11369945/icn_zone-campagne-protections-habit.svg/b81a0e7c-d84c-4b83-adf7-6d197e46c56e",
-											"size": "small",
-											"style": "person"
-										},
-										{
-											"type": "TextBlock",
-											"text": "Home Insurance",
-											"weight": "bolder",
-											"size": "medium"
-										},
-										{
-											"type": "TextBlock",
-											"text": "Third Party Liability up to $1,000,000.00",
-											"wrap": "true"
-										}
-									]
-								}
-							]
-						}
-					]
-				}
-			]
-        }
+        "content": {  
+		   "type":"AdaptiveCard",
+		   "body":[  
+			  {  
+				 "type":"ColumnSet",
+				 "columns":[  
+					{  
+					   "type":"Column",
+					   "size":"auto",
+					   "items":[  
+						  {  
+							 "type":"Image",
+							 "url":"https://www.thepersonal.com/documents/11361124/11369861/icn_hub-carte-protections-auto-base.svg/ebd409a4-a7ab-4bd0-85a9-ef8f8f6f1560",
+							 "size":"small",
+							 "style":"person"
+						  },
+						  {  
+							 "type":"TextBlock",
+							 "text":"Auto",
+							 "weight":"bolder",
+							 "size":"medium"
+						  },
+						  {  
+							 "type":"TextBlock",
+							 "text":"Third Party Liability up to $1,000,000.00",
+							 "wrap":"true"
+						  },
+						  {  
+							 "type":"TextBlock",
+							 "text":"Collision up to $200,000,000.00",
+							 "wrap":"true"
+						  },
+						  {  
+							 "type":"TextBlock",
+							 "text":"Accident Benefits up to $1,000.00",
+							 "wrap":"true"
+						  }
+					   ]
+					},
+					{  
+					   "type":"Column",
+					   "size":"auto",
+					   "items":[  
+						  {  
+							 "type":"Image",
+							 "url":"https://www.thepersonal.com/documents/11361124/11369945/icn_zone-campagne-protections-habit.svg/b81a0e7c-d84c-4b83-adf7-6d197e46c56e",
+							 "size":"small",
+							 "style":"person"
+						  },
+						  {  
+							 "type":"TextBlock",
+							 "text":"Home Insurance",
+							 "weight":"bolder",
+							 "size":"medium"
+						  },
+						  {  
+							 "type":"TextBlock",
+							 "text":"Third Party Liability up to $1,000,000.00",
+							 "wrap":"true"
+						  }
+					   ]
+					}
+				 ]
+			  }
+		   ]
+		}
     });
     session.send(msg).endDialog();
 })
