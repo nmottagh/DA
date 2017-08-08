@@ -79,7 +79,7 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] })
 	if (session.userData.phonenumber) {
 		session.send("OK. I understand you need help. An agent will call you at your phone number: " + session.userData.phonenumber); 
 	} else {
-		session.send("OK. I understand you need help. We would like to call you to help; however, we do not have your phone number on file. Please call us at 1-800-rlb-insrc"); 
+		session.send("OK. I understand you need help. We would like to call you to help; however, we do not have your phone number on file. Please call us at 1-800-rlb-insr"); 
 	}
 })
 .matches('get coverage', (session) => {
@@ -99,8 +99,7 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] })
 						  {  
 							 "type":"Image",
 							 "url":"https://www.thepersonal.com/documents/11361124/11369861/icn_hub-carte-protections-auto-base.svg/ebd409a4-a7ab-4bd0-85a9-ef8f8f6f1560",
-							 "size":"small",
-							 "style":"person"
+							 "size":"small"
 						  },
 						  {  
 							 "type":"TextBlock",
@@ -132,8 +131,7 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] })
 						  {  
 							 "type":"Image",
 							 "url":"https://www.thepersonal.com/documents/11361124/11369945/icn_zone-campagne-protections-habit.svg/b81a0e7c-d84c-4b83-adf7-6d197e46c56e",
-							 "size":"small",
-							 "style":"person"
+							 "size":"small"
 						  },
 						  {  
 							 "type":"TextBlock",
