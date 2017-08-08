@@ -83,129 +83,7 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] })
 	}
 })
 .matches('get coverage', (session) => {
-			var message = new builder.Message(session)
-		.addAttachment({
-			"contentType": "application/vnd.microsoft.card.adaptive",
-			"content": 
-				{
-				"type": "AdaptiveCard",
-				"body": [
-					{
-						"type": "ColumnSet",
-						"columns": [
-							{
-								"type": "Column",
-								"size": "auto",
-								"items": [
-									{
-										"type": "Image",
-										"size": "medium",
-										"url": "https://dl.dropboxusercontent.com/s/lji8s8g67x8jjpq/PricewaterhouseCoopers_Logo.png?dl=0"
-									},
-									{
-										"type": "TextBlock",
-										"text": "Reliable Insurance Inc.",
-										"size": "small",
-										"isSubtle": true   
-									}
-								]
-							},
-							{
-								"type": "Column",
-								"size": "stretch",
-								"items": [
-									{
-										"type": "TextBlock",
-										"text": "Your Claim Summary",
-										"horizontalAlignment": "right",
-										"isSubtle": true
-									},
-									{
-										"type": "TextBlock",
-										"text": "NEW",
-										"horizontalAlignment": "right",
-										"size": "large",
-										"color": "attention"
-									}
-								]
-							}
-						]
-					},
-					{
-						"type": "ColumnSet",
-						"separation": "strong",
-						"columns": [
-							{
-								"type": "Column",
-								"size": "stretch",
-								"items": [
-									{
-										"type": "TextBlock",
-										"text": "Date",
-										"isSubtle": true
-									},
-									{
-										"type": "TextBlock",
-										"text": "Location"
-									},
-									{
-										"type": "TextBlock",
-										"text": "Involves Third Party"
-									},
-									{
-										"type": "TextBlock",
-										"text": "Police Report"
-									}
-								]
-							},
-							{
-								"type": "Column",
-								"size": "auto",
-								"items": [
-									{
-										"type": "TextBlock",
-										"text": "date",
-										"horizontalAlignment": "right",
-										"isSubtle": true
-									},
-									{
-										"type": "TextBlock",
-										"text": "location",
-										"horizontalAlignment": "right"
-									},
-									{
-										"type": "TextBlock",
-										"text": "third",
-										"horizontalAlignment": "right"
-									},
-									{
-										"type": "TextBlock",
-										"text": "police",
-										"horizontalAlignment": "right"
-									}
-								]
-							}
-						]
-					},
-					{
-						"type":"Image",
-						"url": "",
-						"size": "auto",
-						"horizontalAlignment" : "center"
-					}
-					], 
-					"actions": [
-						{
-							"type": "Action.OpenUrl",
-							"title": "File Your Claim",
-							"url" : "www.google.com"
-						}
-					]
-				}
-		});
-       	 
-        session.send(message);
-		session.endDialog();
+	session.beginDialog('/coverage');
 })
 .matches('report accident', (session) => {
 		session.send("OK, I understand you have been in an accident. Please start a claim.");
@@ -227,6 +105,77 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] })
 });
 
 bot.dialog('/', intents);  
+
+bot.dialog('/coverage', [
+	function (session) {
+		var msg = new builder.Message(session)
+			.addAttachment({
+				"contentType": "application/vnd.microsoft.card.adaptive",
+				"content": {  
+				   "type":"AdaptiveCard",
+				   "body":[  
+					  {  
+						 "type":"ColumnSet",
+						 "columns":[  
+							{  
+							   "type":"Column",
+							   "size":"auto",
+							   "items":[  
+								  {  
+									 "type":"Image",
+									 "url":"https://www.thepersonal.com/documents/11361124/11369861/icn_hub-carte-protections-auto-base.svg/ebd409a4-a7ab-4bd0-85a9-ef8f8f6f1560",
+									 "size":"small"
+								  },
+								  {  
+									 "type":"TextBlock",
+									 "text":"Auto",
+									 "weight":"bolder",
+									 "size":"medium"
+								  },
+								  {  
+									 "type":"TextBlock",
+									 "text":"Third Party Liability up to $1,000,000.00"
+								  },
+								  {  
+									 "type":"TextBlock",
+									 "text":"Collision up to $200,000,000.00"
+								  },
+								  {  
+									 "type":"TextBlock",
+									 "text":"Accident Benefits up to $1,000.00"
+								  }
+							   ]
+							},
+							{  
+							   "type":"Column",
+							   "size":"auto",
+							   "items":[  
+								  {  
+									 "type":"Image",
+									 "url":"https://www.thepersonal.com/documents/11361124/11369945/icn_zone-campagne-protections-habit.svg/b81a0e7c-d84c-4b83-adf7-6d197e46c56e",
+									 "size":"small"
+								  },
+								  {  
+									 "type":"TextBlock",
+									 "text":"Home Insurance",
+									 "weight":"bolder",
+									 "size":"medium"
+								  },
+								  {  
+									 "type":"TextBlock",
+									 "text":"Third Party Liability up to $1,000,000.00",
+								  }
+							   ]
+							}
+						 ]
+					  }
+				   ]
+				}
+			});
+			session.send(msg)
+			session.endDialog();
+	}
+]);
 
 // TODO: RESET SESSION VARIABLES
 // TODO: FORCE TO NOT PERSIST SESSION DATA
