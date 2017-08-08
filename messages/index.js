@@ -63,8 +63,8 @@ var recognizer = new builder.LuisRecognizer(LuisModelUrl);
 
 
 bot.recognizer(recognizer);
-bot.set('persistUserData', false);
-bot.set('persistConversationData', false);
+//bot.set('persistUserData', false);
+//bot.set('persistConversationData', false);
 
 var intents = new builder.IntentDialog({ recognizers: [recognizer] })
 // Sample LUIS intent
