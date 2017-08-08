@@ -107,7 +107,7 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] })
 bot.dialog('/', intents);  
 
 bot.dialog('/coverage', (session, args) => {
-		var msg = new builder.Message(session)
+		/*var msg = new builder.Message(session)
 			.addAttachment({
 				"contentType": "application/vnd.microsoft.card.adaptive",
 				"content": {  
@@ -172,8 +172,74 @@ bot.dialog('/coverage', (session, args) => {
 				}
 			});
 			session.send(msg)
-			session.endDialog();
+			session.endDialog();*/
 			
+			var msg = new builder.Message(session)
+    .addAttachment({
+        "contentType": "application/vnd.microsoft.card.adaptive",
+        "content": {  
+		   "type":"AdaptiveCard",
+		   "body":[  
+			  {  
+				 "type":"ColumnSet",
+				 "columns":[  
+					{  
+					   "type":"Column",
+					   "size":"auto",
+					   "items":[  
+						  {  
+							 "type":"Image",
+							 "url":"https://www.thepersonal.com/documents/11361124/11369861/icn_hub-carte-protections-auto-base.svg/ebd409a4-a7ab-4bd0-85a9-ef8f8f6f1560",
+							 "size":"small"
+						  },
+						  {  
+							 "type":"TextBlock",
+							 "text":"Auto",
+							 "weight":"bolder",
+							 "size":"medium"
+						  },
+						  {  
+							 "type":"TextBlock",
+							 "text":"Third Party Liability up to $1,000,000.00"
+						  },
+						  {  
+							 "type":"TextBlock",
+							 "text":"Collision up to $200,000,000.00"
+						  },
+						  {  
+							 "type":"TextBlock",
+							 "text":"Accident Benefits up to $1,000.00"
+						  }
+					   ]
+					},
+					{  
+					   "type":"Column",
+					   "size":"auto",
+					   "items":[  
+						  {  
+							 "type":"Image",
+							 "url":"https://www.thepersonal.com/documents/11361124/11369945/icn_zone-campagne-protections-habit.svg/b81a0e7c-d84c-4b83-adf7-6d197e46c56e",
+							 "size":"small"
+						  },
+						  {  
+							 "type":"TextBlock",
+							 "text":"Home Insurance",
+							 "weight":"bolder",
+							 "size":"medium"
+						  },
+						  {  
+							 "type":"TextBlock",
+							 "text":"Third Party Liability up to $1,000,000.00",
+						  }
+					   ]
+					}
+				 ]
+			  }
+		   ]
+		}
+    });
+    session.send(msg)
+	session.endDialog();
 });
 
 // TODO: RESET SESSION VARIABLES
