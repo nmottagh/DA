@@ -61,10 +61,7 @@ var bot = new builder.UniversalBot(connector);
 //Dialog with Luis
 var recognizer = new builder.LuisRecognizer(LuisModelUrl);
 
-
 bot.recognizer(recognizer);
-//bot.set('persistUserData', false);
-//bot.set('persistConversationData', false);
 
 var intents = new builder.IntentDialog({ recognizers: [recognizer] })
 // Sample LUIS intent
@@ -88,10 +85,11 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] })
 .matches('get coverage', (session) => {
 	var msg = new builder.Message(session)
     .addAttachment({
-        contentType: "application/vnd.microsoft.card.adaptive",
-        content: {
-            type: "AdaptiveCard",
-               body: [	{
+        "contentType": "application/vnd.microsoft.card.adaptive",
+        "content": {
+            "type": "AdaptiveCard",
+            "body": [
+				{
 					"type": "Container",
 					"items": [
 						{
@@ -265,122 +263,123 @@ bot.dialog('/file a claim', [
                   
 		var message = new builder.Message(session)
 		.addAttachment({
-        contentType: "application/vnd.microsoft.card.adaptive",
-        content: {
-            type: "AdaptiveCard",
-               body: [
+			"contentType"": "application/vnd.microsoft.card.adaptive",
+			"content": 
 				{
-					"type": "ColumnSet",
-					"columns": [
-						{
-							"type": "Column",
-							"size": "auto",
-							"items": [
-								{
-									"type": "Image",
-									"size": "medium",
-									"url": "https://dl.dropboxusercontent.com/s/lji8s8g67x8jjpq/PricewaterhouseCoopers_Logo.png?dl=0"
-								},
-								{
-									"type": "TextBlock",
-									"text": "Reliable Insurance Inc.",
-									"size": "small",
-									"isSubtle": true   
-								}
-							]
-						},
-						{
-							"type": "Column",
-							"size": "stretch",
-							"items": [
-								{
-									"type": "TextBlock",
-									"text": "Your Claim Summary",
-									"horizontalAlignment": "right",
-									"isSubtle": true
-								},
-								{
-									"type": "TextBlock",
-									"text": "NEW",
-									"horizontalAlignment": "right",
-									"size": "large",
-									"color": "attention"
-								}
-							]
-						}
-					]
-				},
-				{
-					"type": "ColumnSet",
-					"separation": "strong",
-					"columns": [
-						{
-							"type": "Column",
-							"size": "stretch",
-							"items": [
-								{
-									"type": "TextBlock",
-									"text": "Date",
-									"isSubtle": true
-								},
-								{
-									"type": "TextBlock",
-									"text": "Location"
-								},
-								{
-									"type": "TextBlock",
-									"text": "Involves Third Party"
-								},
-								{
-									"type": "TextBlock",
-									"text": "Police Report"
-								}
-							]
-						},
-						{
-							"type": "Column",
-							"size": "auto",
-							"items": [
-								{
-									"type": "TextBlock",
-									"text": date,
-									"horizontalAlignment": "right",
-									"isSubtle": true
-								},
-								{
-									"type": "TextBlock",
-									"text": location,
-									"horizontalAlignment": "right"
-								},
-								{
-									"type": "TextBlock",
-									"text": thirdparty,
-									"horizontalAlignment": "right"
-								},
-								{
-									"type": "TextBlock",
-									"text": policereportno,
-									"horizontalAlignment": "right"
-								}
-							]
-						}
-					]
-				},
-				{
-					"type":"Image",
-					"url": photourl,
-					"size": "auto",
-					"horizontalAlignment" : "center"
-				}
-				], 
-				"actions": [
+				"type": "AdaptiveCard",
+				"body": [
 					{
-						"type": "Action.OpenUrl",
-						"title": "File Your Claim",
-						"url": "https://docs.google.com/forms/d/e/1FAIpQLSdhc96iE-8_pbAKg5ejIsSBUlPkpTeEjkExUsG6wnx-gRSJRg/viewform?usp=pp_url&entry.2005620554=" + date + "&entry.1045781291=" + location + "&entry.1065046570=" + thirdparty + "&entry.1166974658=" + policereportno + "&entry.839337160"
+						"type": "ColumnSet",
+						"columns": [
+							{
+								"type": "Column",
+								"size": "auto",
+								"items": [
+									{
+										"type": "Image",
+										"size": "medium",
+										"url": "https://dl.dropboxusercontent.com/s/lji8s8g67x8jjpq/PricewaterhouseCoopers_Logo.png?dl=0"
+									},
+									{
+										"type": "TextBlock",
+										"text": "Reliable Insurance Inc.",
+										"size": "small",
+										"isSubtle": true   
+									}
+								]
+							},
+							{
+								"type": "Column",
+								"size": "stretch",
+								"items": [
+									{
+										"type": "TextBlock",
+										"text": "Your Claim Summary",
+										"horizontalAlignment": "right",
+										"isSubtle": true
+									},
+									{
+										"type": "TextBlock",
+										"text": "NEW",
+										"horizontalAlignment": "right",
+										"size": "large",
+										"color": "attention"
+									}
+								]
+							}
+						]
+					},
+					{
+						"type": "ColumnSet",
+						"separation": "strong",
+						"columns": [
+							{
+								"type": "Column",
+								"size": "stretch",
+								"items": [
+									{
+										"type": "TextBlock",
+										"text": "Date",
+										"isSubtle": true
+									},
+									{
+										"type": "TextBlock",
+										"text": "Location"
+									},
+									{
+										"type": "TextBlock",
+										"text": "Involves Third Party"
+									},
+									{
+										"type": "TextBlock",
+										"text": "Police Report"
+									}
+								]
+							},
+							{
+								"type": "Column",
+								"size": "auto",
+								"items": [
+									{
+										"type": "TextBlock",
+										"text": date,
+										"horizontalAlignment": "right",
+										"isSubtle": true
+									},
+									{
+										"type": "TextBlock",
+										"text": location,
+										"horizontalAlignment": "right"
+									},
+									{
+										"type": "TextBlock",
+										"text": thirdparty,
+										"horizontalAlignment": "right"
+									},
+									{
+										"type": "TextBlock",
+										"text": policereportno,
+										"horizontalAlignment": "right"
+									}
+								]
+							}
+						]
+					},
+					{
+						"type":"Image",
+						"url": photourl,
+						"size": "auto",
+						"horizontalAlignment" : "center"
 					}
-				]
-			}
+					], 
+					"actions": [
+						{
+							"type": "Action.OpenUrl",
+							"title": "File Your Claim",
+							"url": "https://docs.google.com/forms/d/e/1FAIpQLSdhc96iE-8_pbAKg5ejIsSBUlPkpTeEjkExUsG6wnx-gRSJRg/viewform?usp=pp_url&entry.2005620554=" + date + "&entry.1045781291=" + location + "&entry.1065046570=" + thirdparty + "&entry.1166974658=" + policereportno + "&entry.839337160"
+						}
+					]
+				}
 		});
        	 
         session.send(message);
