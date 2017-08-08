@@ -8,7 +8,7 @@ https://docs.botframework.com/en-us/node/builder/chat/dialogs/#waterfall
 // TODO: Update the help handler to include the wix 
 // TODO: Take the picture as an attachment and put in the hero card
 
-var deployment = "non-production";
+var deployment = "production";
 
 "use strict";
 var builder = require("botbuilder");
