@@ -252,7 +252,7 @@ bot.dialog('/file a claim', [
                   
 		var message = new builder.Message(session)
 		.addAttachment({
-			"contentType"": "application/vnd.microsoft.card.adaptive",
+			"contentType": "application/vnd.microsoft.card.adaptive",
 			"content": 
 				{
 				"type": "AdaptiveCard",
