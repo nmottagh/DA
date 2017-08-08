@@ -106,13 +106,12 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] })
 
 bot.dialog('/', intents);  
 
-bot.dialog('/coverage', [
-	function (session) {
+bot.dialog('/coverage', (session, args) => {
 		var msg = new builder.Message(session)
 			.addAttachment({
 				"contentType": "application/vnd.microsoft.card.adaptive",
 				"content": {  
-				   "type":"AdaptiveCard",
+				   "type": "AdaptiveCard",
 				   "body":[  
 					  {  
 						 "type":"ColumnSet",
@@ -174,8 +173,8 @@ bot.dialog('/coverage', [
 			});
 			session.send(msg)
 			session.endDialog();
-	}
-]);
+			
+});
 
 // TODO: RESET SESSION VARIABLES
 // TODO: FORCE TO NOT PERSIST SESSION DATA
