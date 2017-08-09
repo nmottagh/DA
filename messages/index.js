@@ -107,7 +107,7 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] })
 bot.dialog('/', intents);  
 
 bot.dialog('/coverage', (session, args) => {
-		/*var msg = new builder.Message(session)
+		var msg = new builder.Message(session)
 			.addAttachment({
 				"contentType": "application/vnd.microsoft.card.adaptive",
 				"content": {  
@@ -172,124 +172,7 @@ bot.dialog('/coverage', (session, args) => {
 				}
 			});
 			session.send(msg)
-			session.endDialog();*/
-			
-					var message = new builder.Message(session)
-		.addAttachment({
-			"contentType": "application/vnd.microsoft.card.adaptive",
-			"content": 
-				{
-				"type": "AdaptiveCard",
-				"body": [
-					{
-						"type": "ColumnSet",
-						"columns": [
-							{
-								"type": "Column",
-								"size": "auto",
-								"items": [
-									{
-										"type": "Image",
-										"size": "medium",
-										"url": "https://dl.dropboxusercontent.com/s/lji8s8g67x8jjpq/PricewaterhouseCoopers_Logo.png?dl=0"
-									},
-									{
-										"type": "TextBlock",
-										"text": "Reliable Insurance Inc.",
-										"size": "small",
-										"isSubtle": true   
-									}
-								]
-							},
-							{
-								"type": "Column",
-								"size": "stretch",
-								"items": [
-									{
-										"type": "TextBlock",
-										"text": "Your Claim Summary",
-										"horizontalAlignment": "right",
-										"isSubtle": true
-									},
-									{
-										"type": "TextBlock",
-										"text": "NEW",
-										"horizontalAlignment": "right",
-										"size": "large",
-										"color": "attention"
-									}
-								]
-							}
-						]
-					},
-					{
-						"type": "ColumnSet",
-						"separation": "strong",
-						"columns": [
-							{
-								"type": "Column",
-								"size": "stretch",
-								"items": [
-									{
-										"type": "TextBlock",
-										"text": "Date",
-										"isSubtle": true
-									},
-									{
-										"type": "TextBlock",
-										"text": "Location"
-									},
-									{
-										"type": "TextBlock",
-										"text": "Involves Third Party"
-									},
-									{
-										"type": "TextBlock",
-										"text": "Police Report"
-									}
-								]
-							},
-							{
-								"type": "Column",
-								"size": "auto",
-								"items": [
-									{
-										"type": "TextBlock",
-										"text": "one",
-										"horizontalAlignment": "right",
-										"isSubtle": true
-									},
-									{
-										"type": "TextBlock",
-										"text": "two",
-										"horizontalAlignment": "right"
-									},
-									{
-										"type": "TextBlock",
-										"text": "three",
-										"horizontalAlignment": "right"
-									},
-									{
-										"type": "TextBlock",
-										"text": "four",
-										"horizontalAlignment": "right"
-									}
-								]
-							}
-						]
-					},
-					{
-						"type":"Image",
-						"url": "p",
-						"size": "auto",
-						"horizontalAlignment" : "center"
-					}
-					]
-				}
-		});
-       	 
-        session.send(message);
-		session.endDialog();
+			session.endDialog();
 });
 
 // TODO: RESET SESSION VARIABLES
@@ -481,7 +364,8 @@ bot.dialog('/file a claim', [
 						{
 							"type": "Action.OpenUrl",
 							"title": "File Your Claim",
-							"url": "https://docs.google.com/forms/d/e/1FAIpQLSdhc96iE-8_pbAKg5ejIsSBUlPkpTeEjkExUsG6wnx-gRSJRg/viewform?usp=pp_url&entry.2005620554=" + date + "&entry.1045781291=" + location + "&entry.1065046570=" + thirdparty + "&entry.1166974658=" + policereportno + "&entry.839337160"
+							//"url": "https://docs.google.com/forms/d/e/1FAIpQLSdhc96iE-8_pbAKg5ejIsSBUlPkpTeEjkExUsG6wnx-gRSJRg/viewform?usp=pp_url&entry.2005620554=" + date + "&entry.1045781291=" + location + "&entry.1065046570=" + thirdparty + "&entry.1166974658=" + policereportno + "&entry.839337160"
+							"url" : "https://nmottagh.wixsite.com/reliableinsurance/my-claims"
 						}
 					]
 				}
