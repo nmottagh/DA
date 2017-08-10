@@ -225,7 +225,7 @@ bot.dialog('/file a claim', [
 		session.send("I've summarized your info. Please review so we can submit it to our claims experts!");
 		next();
 	}, 
-	function (session, results, args) {
+	function (session, results) {
                   
 		var message = new builder.Message(session)
 				.addAttachment({
