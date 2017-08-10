@@ -227,7 +227,7 @@ bot.dialog('/file a claim', [
 	function (session, results, args) {
                   
 		var message = new builder.Message(session)
-		.addAttachment({
+				.addAttachment({
 			"contentType": "application/vnd.microsoft.card.adaptive",
 			"content": 
 				{
@@ -284,11 +284,20 @@ bot.dialog('/file a claim', [
 								"items": [
 									{
 										"type": "TextBlock",
+										"text": "Date",
+										"isSubtle": true
+									},
+									{
+										"type": "TextBlock",
 										"text": "Location"
 									},
 									{
 										"type": "TextBlock",
 										"text": "Involves Third Party"
+									},
+									{
+										"type": "TextBlock",
+										"text": "Police Report"
 									}
 								]
 							},
@@ -298,12 +307,23 @@ bot.dialog('/file a claim', [
 								"items": [
 									{
 										"type": "TextBlock",
+										"text": "TODO: remove me",
+										"horizontalAlignment": "right",
+										"isSubtle": true
+									},
+									{
+										"type": "TextBlock",
 										"text": location,
 										"horizontalAlignment": "right"
 									},
 									{
 										"type": "TextBlock",
 										"text": thirdparty,
+										"horizontalAlignment": "right"
+									},
+									{
+										"type": "TextBlock",
+										"text": "TODO: remove me",
 										"horizontalAlignment": "right"
 									}
 								]
@@ -332,6 +352,7 @@ bot.dialog('/file a claim', [
 		session.endDialog();
     }
 ]);
+
 
 bot.dialog('/askName', [
     function (session) {
