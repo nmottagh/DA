@@ -222,7 +222,7 @@ bot.dialog('/file a claim', [
 		next();
 	},
 	function (session) {
-		session.send(session, "I've summarized your info. Please review so we can submit it to our claims experts!");
+		session.send("I've summarized your info. Please review so we can submit it to our claims experts!");
 	}, 
 	function (session, results, args) {
                   
