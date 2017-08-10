@@ -221,8 +221,9 @@ bot.dialog('/file a claim', [
 		}
 		next();
 	},
-	function (session) {
+	function (session, next) {
 		session.send("I've summarized your info. Please review so we can submit it to our claims experts!");
+		next();
 	}, 
 	function (session, results, args) {
                   
