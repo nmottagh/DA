@@ -86,7 +86,7 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] })
 	session.beginDialog('/coverage');
 })
 .matches('report accident', (session) => {
-		session.send("OK, I understand you have been in an accident. Please start a claim.");
+		session.send("OK, it sounds like you've had quite and adventurous day. Let's start a new auto claim for you!");
 		session.beginDialog('/file a claim');
 })
 .matches('file a claim', (session) => {
@@ -188,21 +188,14 @@ var photourl = '';
 bot.dialog('/file a claim', [
     
 	function (session) {
-		builder.Prompts.text(session, "At what date did your accident occur?");
+		builder.Prompts.text(session, "Where did your accident occur?");
 	}, 
 	function (session, results, next) {
-		date = results.response;
-		next();
-	},
-	function (session){
-		builder.Prompts.text(session, "Where did your accident occur?")
-	},
-	function (session, results, next){
 		location = results.response;
 		next();
 	},
 	function (session) {
-		builder.Prompts.confirm(session, "Is a third party car or person involved?");
+		builder.Prompts.confirm(session, "OK! I understand. Was there another car or person involved in the accident?");
 	},
 	function (session, results, next) {
 		if (results.response) {
@@ -213,7 +206,7 @@ bot.dialog('/file a claim', [
 		next();
 	},
 	function (session) {
-		builder.Prompts.confirm(session, "Do you have a picture?");
+		builder.Prompts.confirm(session, "Do you have a picture of the accident or your vehicle?");
 	},
 	function (session, results, next) {
 		if (results.response) {
@@ -229,24 +222,8 @@ bot.dialog('/file a claim', [
 		next();
 	},
 	function (session) {
-		builder.Prompts.confirm(session, "Has a police report been filed?");
+		builder.send(session, "I've summarized your info. Please review so we can submit it to our claims experts!");
 	}, 
-	function (session, results, next) {
-		if (results.response) {
-			builder.Prompts.text(session, "Please enter your police report number.");
-		} else {
-			session.send("We will file your claim intake without a police report for now. Please ensure you update your claim with the police number once available.")
-		}
-		next();
-	}, 
-	function (session, results, next) {
-		if (!results.response) {
-			policereportno = "Not Provided";
-		} else {
-			policereportno = results.response;
-		}
-		next();
-	},
 	function (session, results, args) {
                   
 		var message = new builder.Message(session)
@@ -307,20 +284,11 @@ bot.dialog('/file a claim', [
 								"items": [
 									{
 										"type": "TextBlock",
-										"text": "Date",
-										"isSubtle": true
-									},
-									{
-										"type": "TextBlock",
 										"text": "Location"
 									},
 									{
 										"type": "TextBlock",
 										"text": "Involves Third Party"
-									},
-									{
-										"type": "TextBlock",
-										"text": "Police Report"
 									}
 								]
 							},
@@ -330,23 +298,12 @@ bot.dialog('/file a claim', [
 								"items": [
 									{
 										"type": "TextBlock",
-										"text": date,
-										"horizontalAlignment": "right",
-										"isSubtle": true
-									},
-									{
-										"type": "TextBlock",
 										"text": location,
 										"horizontalAlignment": "right"
 									},
 									{
 										"type": "TextBlock",
 										"text": thirdparty,
-										"horizontalAlignment": "right"
-									},
-									{
-										"type": "TextBlock",
-										"text": policereportno,
 										"horizontalAlignment": "right"
 									}
 								]
