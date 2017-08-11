@@ -3,11 +3,6 @@ This template demonstrates how to use Waterfalls to collect input from a user us
 For a complete walkthrough of creating this type of bot see the article at
 https://docs.botframework.com/en-us/node/builder/chat/dialogs/#waterfall
 -----------------------------------------------------------------------------*/
-
-// TODO: Clean up the hero card
-// TODO: Update the help handler to include the wix 
-// TODO: Take the picture as an attachment and put in the hero card
-
 var deployment = "production";
 
 "use strict";
@@ -32,12 +27,12 @@ if (deployment == "production") {
 
 } else {
 	var restify = require('restify');
-	
+
 	// Make sure you add code to validate these fields
 	var luisAppId = '';
 	var luisAPIKey = '';
 	var luisAPIHostName = 'westus.api.cognitive.microsoft.com';
-	
+
 	// Setup Restify Server
 	var server = restify.createServer();
 	server.listen(process.env.port || process.env.PORT || 3978, function () {
@@ -46,10 +41,10 @@ if (deployment == "production") {
 
 	// Create chat connector for communicating with the Bot Framework Service
 	var connector = new builder.ChatConnector({
-		appId: process.env.MICROSOFT_APP_ID,
-		appPassword: process.env.MICROSOFT_APP_PASSWORD
+		appId: "",
+		appPassword: ""
 	});
-	
+
 	// Listen for messages from users 
 	server.post('/api/messages', connector.listen());
 }
@@ -86,7 +81,7 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] })
 	session.beginDialog('/coverage');
 })
 .matches('report accident', (session) => {
-		session.send("OK, it sounds like you've had quite and adventurous day. Let's start a new auto claim for you!");
+		session.send("It sounds like you've had quite an adventurous day. Lets start a new auto claim for you!");
 		session.beginDialog('/file a claim');
 })
 .matches('file a claim', (session) => {
@@ -107,7 +102,16 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] })
 bot.dialog('/', intents);  
 
 bot.dialog('/coverage', (session, args) => {
-		var msg = new builder.Message(session)
+	
+	var message = new builder.Message(session)
+        .addAttachment({
+            contentUrl: "https://dl.dropboxusercontent.com/s/5kf1afq6gb94a0t/Coverage%20card.png?dl=0",
+            contentType: "image/png",
+            name: "test.png"
+        });
+            
+	// TODO: Raise a bug in git for this. 
+	/*var msg = new builder.Message(session)
 			.addAttachment({
 				"contentType": "application/vnd.microsoft.card.adaptive",
 				"content": {  
@@ -133,15 +137,19 @@ bot.dialog('/coverage', (session, args) => {
 								  },
 								  {  
 									 "type":"TextBlock",
-									 "text":"Third Party Liability up to $1,000,000.00"
+									 "text":"Third Party Liability up to $1,000,000.00",
+									 "wrap":true
+									 
 								  },
 								  {  
 									 "type":"TextBlock",
-									 "text":"Collision up to $200,000,000.00"
+									 "text":"Collision up to $200,000,000.00",
+									 "wrap":true
 								  },
 								  {  
 									 "type":"TextBlock",
-									 "text":"Accident Benefits up to $1,000.00"
+									 "text":"Accident Benefits up to $1,000.00",
+									 "wrap": true
 								  }
 							   ]
 							},
@@ -163,6 +171,7 @@ bot.dialog('/coverage', (session, args) => {
 								  {  
 									 "type":"TextBlock",
 									 "text":"Third Party Liability up to $1,000,000.00",
+									 "wrap":true
 								  }
 							   ]
 							}
@@ -170,13 +179,11 @@ bot.dialog('/coverage', (session, args) => {
 					  }
 				   ]
 				}
-			});
-			session.send(msg)
+			});*/
+			
+			session.send(message);
 			session.endDialog();
 });
-
-// TODO: RESET SESSION VARIABLES
-// TODO: FORCE TO NOT PERSIST SESSION DATA
 
 var date;
 var location;
@@ -195,22 +202,24 @@ bot.dialog('/file a claim', [
 		next();
 	},
 	function (session) {
-		builder.Prompts.confirm(session, "OK! I understand. Was there another car or person involved in the accident?");
+		builder.Prompts.confirm(session, "I see! Was there another car or person involved in the accident?");
 	},
 	function (session, results, next) {
 		if (results.response) {
 			thirdparty = 'Yes';
+			session.send("Oh no! That sounds bad.");
 		} else {
 			thirdparty = 'No';
+			session.send("Alight.");
 		}
 		next();
 	},
 	function (session) {
-		builder.Prompts.confirm(session, "Do you have a picture of the accident or your vehicle?");
+		builder.Prompts.confirm(session, "Do you want to submit a picture of the accident or your vehicle?");
 	},
 	function (session, results, next) {
 		if (results.response) {
-			builder.Prompts.attachment(session, "Please attach a picture.");
+			builder.Prompts.attachment(session, "OK. Please take a new picture or attach an existing one.");
 		}
 		next();
 	},
@@ -222,8 +231,8 @@ bot.dialog('/file a claim', [
 		next();
 	},
 	function (session) {
-		session.send("I've summarized your info. Please review so we can submit it to our claims experts!");
-                  
+		session.send("I've summarized your claim information. Please review and file your claim when ready!");
+
 		var message = new builder.Message(session)
 				.addAttachment({
 			"contentType": "application/vnd.microsoft.card.adaptive",
@@ -282,20 +291,11 @@ bot.dialog('/file a claim', [
 								"items": [
 									{
 										"type": "TextBlock",
-										"text": "Date",
-										"isSubtle": true
-									},
-									{
-										"type": "TextBlock",
 										"text": "Location"
 									},
 									{
 										"type": "TextBlock",
 										"text": "Involves Third Party"
-									},
-									{
-										"type": "TextBlock",
-										"text": "Police Report"
 									}
 								]
 							},
@@ -305,23 +305,12 @@ bot.dialog('/file a claim', [
 								"items": [
 									{
 										"type": "TextBlock",
-										"text": "TODO: remove me",
-										"horizontalAlignment": "right",
-										"isSubtle": true
-									},
-									{
-										"type": "TextBlock",
 										"text": location,
 										"horizontalAlignment": "right"
 									},
 									{
 										"type": "TextBlock",
 										"text": thirdparty,
-										"horizontalAlignment": "right"
-									},
-									{
-										"type": "TextBlock",
-										"text": "TODO: remove me",
 										"horizontalAlignment": "right"
 									}
 								]
@@ -339,7 +328,6 @@ bot.dialog('/file a claim', [
 						{
 							"type": "Action.OpenUrl",
 							"title": "File Your Claim",
-							//"url": "https://docs.google.com/forms/d/e/1FAIpQLSdhc96iE-8_pbAKg5ejIsSBUlPkpTeEjkExUsG6wnx-gRSJRg/viewform?usp=pp_url&entry.2005620554=" + date + "&entry.1045781291=" + location + "&entry.1065046570=" + thirdparty + "&entry.1166974658=" + policereportno + "&entry.839337160"
 							"url" : "https://nmottagh.wixsite.com/reliableinsurance/my-claims"
 						}
 					]
@@ -351,6 +339,8 @@ bot.dialog('/file a claim', [
     }
 ]);
 
+// Old link for Google Forms
+//"url": "https://docs.google.com/forms/d/e/1FAIpQLSdhc96iE-8_pbAKg5ejIsSBUlPkpTeEjkExUsG6wnx-gRSJRg/viewform?usp=pp_url&entry.2005620554=" + date + "&entry.1045781291=" + location + "&entry.1065046570=" + thirdparty + "&entry.1166974658=" + policereportno + "&entry.839337160"
 
 bot.dialog('/askName', [
     function (session) {
@@ -371,7 +361,7 @@ bot.dialog('/askName', [
 
 bot.dialog('/menu', [
 	function (session) {
-		builder.Prompts.choice(session, "What can I help you with today?", "Check Coverage | File a Claim | Get Contact Info", {listStyle:3});
+		builder.Prompts.choice(session, "Hey! What's up " + session.userData.name + "? How can I help you today? " , "Check Coverage | File a Claim | Get Contact Info", {listStyle:3});
 		session.endDialog();
 	}
 ]);
