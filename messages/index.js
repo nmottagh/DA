@@ -361,7 +361,7 @@ bot.dialog('/askName', [
 
 bot.dialog('/menu', [
 	function (session) {
-		builder.Prompts.choice(session, "Hey! What's up " + session.userData.name + "? How can I help you today? " , "Check Coverage | File a Claim | Get Contact Info", {listStyle:3});
+		builder.Prompts.choice(session, "Hello " + session.userData.name + "! How can I help you today? " , "Check Coverage | File a Claim | Get Contact Info", {listStyle:3});
 		session.endDialog();
 	}
 ]);
