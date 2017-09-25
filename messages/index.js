@@ -33,7 +33,7 @@ if (deployment == "production") {
 	var luisAPIKey = '';
 	var luisAPIHostName = 'westus.api.cognitive.microsoft.com';
 
-	// Setup Restify Server
+	// Setup Restify Server locally
 	var server = restify.createServer();
 	server.listen(process.env.port || process.env.PORT || 3978, function () {
 	   console.log('%s listening to %s', server.name, server.url); 
